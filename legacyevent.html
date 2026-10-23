@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acara Kelas & Q&A - Legacy IF '26</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        :root {
+            --bg-gradient: radial-gradient(circle at 15% 15%, #0f172a 0%, #090d16 95%);
+            --container-bg: rgba(15, 23, 42, 0.82);
+            --border-color: rgba(56, 189, 248, 0.15);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.5);
+            --card-hover: rgba(30, 41, 59, 0.85);
+            --th-bg: rgba(15, 23, 42, 0.9);
+            --hover-row: rgba(56, 189, 248, 0.05);
+            --input-bg: rgba(15, 23, 42, 0.8);
+            --accent-glow: 0 0 30px rgba(2, 132, 199, 0.15);
+        }
+
+        html.light {
+            --bg-gradient: radial-gradient(circle at 15% 15%, #f1f5f9 0%, #cbd5e1 95%);
+            --container-bg: rgba(255, 255, 255, 0.88);
+            --border-color: rgba(2, 132, 199, 0.2);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: rgba(241, 245, 249, 0.8);
+            --card-hover: rgba(255, 255, 255, 1);
+            --th-bg: rgba(226, 232, 240, 0.9);
+            --hover-row: rgba(2, 132, 199, 0.04);
+            --input-bg: rgba(255, 255, 255, 0.95);
+            --accent-glow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 15px;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1050px;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), var(--accent-glow);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 22px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-box {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+        }
+
+        .brand-text h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .brand-text span {
+            font-size: 0.75rem;
+            color: #38bdf8;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
+        }
+        .btn:hover { background: linear-gradient(135deg, #0369a1, #075985); transform: translateY(-1px); }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #475569, #334155);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 11px 18px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        .btn-admin:hover { background: #334155; }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.3); }
+
+        .btn-theme {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn-theme:hover { border-color: #38bdf8; }
+
+        .hero-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 99px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+
+        .hero-section h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 24px auto;
+            line-height: 1.6;
+        }
+
+        .countdown-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .count-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 12px;
+            min-width: 80px;
+        }
+
+        .count-item span {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        .count-item small {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            margin-top: 30px;
+        }
+
+        .rundown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .rundown-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .rundown-time {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .rundown-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .rundown-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .qna-single-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .toolbar {
+            margin: 25px 0 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 240px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: var(--th-bg);
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 16px 20px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 99px;
+        }
+        .status-izin { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+        .status-bantuan { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            border-radius: 22px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            margin: auto;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 6px;
+            color: #38bdf8;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .modal-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .admin-inbox-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .admin-inbox-item h5 { color: #38bdf8; font-size: 0.95rem; margin-bottom: 4px; }
+        .admin-inbox-item p { font-size: 0.9rem; color: var(--text-main); margin-bottom: 6px; }
+        .admin-inbox-item small { color: var(--text-muted); font-size: 0.75rem; }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-delete:hover { background: rgba(239, 68, 68, 0.3); }
+
+        #toast {
+            visibility: hidden;
+            min-width: 300px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #34d399;
+            text-align: center;
+            border-radius: 14px;
+            padding: 16px 22px;
+            position: fixed;
+            z-index: 200;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%) translateY(-20px);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            font-size: 0.95rem;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        #toast.show {
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand">
+                <div class="logo-box">IF</div>
+                <div class="brand-text">
+                    <span>Legacy '26</span>
+                    <h2>Official Event Makrab Kelas</h2>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-theme" onclick="toggleTheme()" id="themeBtn" title="Ganti Tema">☀️</button>
+                <button class="btn-admin" onclick="openAdminLoginModal()">🔒 Panel Panitia</button>
+                <button class="btn" onclick="openModal()">Konfirmasi Kehadiran</button>
+            </div>
+        </div>
+
+        <!-- Hero & Countdown -->
+        <div class="hero-section">
+            <span class="hero-badge">Agenda Resmi Kelas</span>
+            <h1> Makrab Legacy IF '26</h1>
+            <p>Rangkaian acara kebersamaan mahasiswa Teknik Informatika angkatan 2026. Cek rundown dari panitia di bawah dan pastikan konfirmasimu tercatat!</p>
+            
+            <div class="countdown-box" id="countdown">
+                <div class="count-item"><span id="days">00</span><small>Hari</small></div>
+                <div class="count-item"><span id="hours">00</span><small>Jam</small></div>
+                <div class="count-item"><span id="minutes">00</span><small>Menit</small></div>
+                <div class="count-item"><span id="seconds">00</span><small>Detik</small></div>
+            </div>
+        </div>
+
+        <!-- Informasi Detail -->
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🎯 Tujuan & Maksud Acara</h3>
+                <p>
+Ajang buat saling kenal lebih dekat anak kelas di luar jam kuliah.
+Memperkuat Solidaritas Membangun kekompakan angkatan agar ke depannya bisa saling support.
+Refreshing (Healing)
+Sarana melepas rasa cape dan bosen dari rutinitas akademik yang padat lewat kegiatan yang seru dan santai.
+Membangun Komunikasi Mempermudah koordinasi dan kebersamaan antar kelas agar hubungan pertemanan di kelas makin erat.</p>
+            </div>
+            <div class="info-card">
+                <h3>📍 Lokasi & Waktu Pelaksanaan</h3>
+                <p><strong>Tempat:</strong> Aula / Vila Gathering Utama<br><strong>Waktu:</strong> Pukul 08:00 WIB s.d. Selesai<br><span style="font-size: 0.8rem; color: #38bdf8;">*Harap hadir tepat waktu sesuai rundown panitia.</span></p>
+            </div>
+        </div>
+
+        <!-- Rundown Panitia -->
+        <div class="section-title">📅 Rundown Resmi Acara (Panitia)</div>
+        <div class="rundown-grid">
+            <div class="rundown-card">
+                <span class="rundown-time">09:00 - 09:20 WIB</span>
+                <h4>Kumpul & Registrasi</h4>
+                <p>Peserta hadir di lokasi acara, pengisian daftar hadir ulang, dan pembagian atribut kelompok.</p>
+            </div>
+            <div class="rundown-card">
+                <span class="rundown-time">09:30 - 09:45 WIB</span>
+                <h4>Pembukaan & Sambutan</h4>
+                <p>Penyampaian kata sambutan dari Ketua Pelaksana.</p>
+            </div>
+            <div class="rundown-card">
+                <span class="rundown-time">10:00 - 11:30 WIB</span>
+                <h4>Games & Fun Activity</h4>
+                <p>Sesi games interaktif antar kelompok untuk mempererat keakraban seluruh kelas.</p>
+            </div>
+            <div class="rundown-card">
+                <span class="rundown-time">11:30 - 13:30 WIB</span>
+                <h4>ISHOMA & Ramah Tamah</h4>
+                <p>Istirahat, sholat, makan siang bersama, dan sesi ngobrol santai antar kelas.</p>
+            </div>
+            <div class="rundown-card">
+                <span class="rundown-time">13:30 - 15:00 WIB</span>
+                <h4>Diskusi & Rencana Kelas</h4>
+                <p>Pembahasan kelas, kesan dan kesan dari acara, aspirasi kelas, dan sesi dokumentasi bersama.</p>
+            </div>
+            <div class="rundown-card">
+                <span class="rundown-time">15:00 - Selesai</span>
+                <h4>Penutupan</h4>
+                <p>Doa bersama, pengumuman pemenang games, foto angkatan, dan persiapan pulang.</p>
+            </div>
+        </div>
+
+        <!-- Q&A Kotak Pesan Privasi -->
+        <div class="section-title">💬 Punya Pertanyaan untuk Panitia?</div>
+        <div class="qna-single-box">
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 18px;">Pesan atau pertanyaan yang kamu kirimkan bersifat rahasia dan **hanya bisa dibaca oleh panitia/admin**.</p>
+            <form id="qnaForm" onsubmit="submitQna(event)">
+                <div class="form-group">
+                    <label>Nama / Panggilan</label>
+                    <input type="text" id="qnaNama" required placeholder="Contoh: Raz">
+                </div>
+                <div class="form-group">
+                    <label>Pertanyaan / Pesan Rahasia</label>
+                    <textarea id="qnaPesan" rows="3" required placeholder="Tuliskan pesan atau pertanyaanmu di sini..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center;">Kirim Pesan ke Panitia</button>
+            </form>
+        </div>
+
+        <!-- Tabel Rekap Kehadiran Peserta -->
+        <div class="toolbar">
+            <div class="section-title" style="margin-bottom: 0; margin-top: 0;">👥 Daftar Konfirmasi Peserta</div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Cari nama..." onkeyup="handleSearch()" style="min-width: 180px;">
+                <button class="btn-danger" onclick="clearAllData()">🗑️ Reset Data</button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama Lengkap</th>
+                        <th>Status Izin / Bantuan</th>
+                        <th>Waktu Konfirmasi</th>
+                    </tr>
+                </thead>
+                <tbody id="data-peserta"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Kehadiran -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <h3>Konfirmasi Kehadiran Acara</h3>
+            <p>Masukkan nama dan status izin orang tua atau kebutuhan bantuanmu.</p>
+            <form id="eventForm" onsubmit="submitKonfirmasi(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="inputNama" required placeholder="Nama lengkapmu">
+                </div>
+                <div class="form-group">
+                    <label>Status Izin & Bantuan</label>
+                    <select id="inputStatus">
+                        <option value="Sudah Mendapat Izin Orang Tua">✅ Sudah Mendapat Izin Orang Tua</option>
+                        <option value="Perlu Bantuan dari Panitia">🤝 Perlu Bantuan dari Panitia</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="btn">Kirim Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Login Sandi Panitia -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <h3>Login Panel Panitia</h3>
+            <p>Masukkan sandi rahasia untuk membuka kotak pesan masuk.</p>
+            <form id="adminLoginForm" onsubmit="verifyAdmin(event)">
+                <div class="form-group">
+                    <label>Sandi Panitia</label>
+                    <input type="password" id="adminPassword" required placeholder="Sandi rahasia panitia">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAdminLoginModal()">Batal</button>
+                    <button type="submit" class="btn">Masuk</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Dashboard Inbox Panitia -->
+    <div class="modal" id="adminDashboardModal">
+        <div class="modal-content" style="max-width: 650px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin-bottom: 0;">🔒 Inbox Pesan Panitia</h3>
+                <button class="btn-cancel" onclick="closeAdminDashboard()">Tutup</button>
+            </div>
+            <p>Daftar pertanyaan rahasia yang dikirim oleh mahasiswa:</p>
+            <div id="adminInboxContainer" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                <!-- List pesan masuk -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifikasi -->
+    <div id="toast">Berhasil disimpan!</div>
+
+    <script>
+        let eventDate = new Date().getTime() + (18 * 24 * 60 * 60 * 1000);
+        function updateCountdown() {
+            let now = new Date().getTime();
+            let distance = eventDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<h3 style='color:#34d399;'>Acara Sedang / Telah Berlangsung!</h3>";
+                return;
+            }
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        let storageKey = "legacy_event_peserta_v4";
+        let pesertaList = JSON.parse(localStorage.getItem(storageKey)) || [];
+        let qnaList = JSON.parse(localStorage.getItem("legacy_event_qna_v4")) || [];
+
+        function saveStorage() {
+            localStorage.setItem(storageKey, JSON.stringify(pesertaList));
+            localStorage.setItem("legacy_event_qna_v4", JSON.stringify(qnaList));
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.innerText = msg;
+            t.className = "show";
+            setTimeout(() => { t.className = ""; }, 3000);
+        }
+
+        function renderTable(array) {
+            const tbody = document.getElementById("data-peserta");
+            tbody.innerHTML = "";
+
+            if (array.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 30px;">Belum ada data konfirmasi peserta. Silakan klik tombol "Konfirmasi Kehadiran" di atas.</td></tr>`;
+                return;
+            }
+
+            array.forEach(item => {
+                let badgeClass = item.status.includes("Bantuan") ? "status-bantuan" : "status-izin";
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="font-weight: 600;">${item.nama}</td>
+                    <td><span class="badge ${badgeClass}">${item.status}</span></td>
+                    <td style="color: var(--text-muted); font-size: 0.85rem;">${item.waktu}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleSearch() {
+            let keyword = document.getElementById("searchInput").value.toLowerCase();
+            let filtered = pesertaList.filter(i => 
+                i.nama.toLowerCase().includes(keyword)
+            );
+            renderTable(filtered);
+        }
+
+        function clearAllData() {
+            if (confirm("Yakin ingin menghapus seluruh data konfirmasi peserta dari awal?")) {
+                pesertaList = [];
+                localStorage.removeItem(storageKey);
+                renderTable(pesertaList);
+                showToast("🗑️ Semua data peserta berhasil di-reset bersih!");
+            }
+        }
+
+        function openModal() {
+            document.getElementById("eventModal").style.display = "flex";
+        }
+        function closeModal() {
+            document.getElementById("eventModal").style.display = "none";
+            document.getElementById("eventForm").reset();
+        }
+
+        function submitKonfirmasi(e) {
+            e.preventDefault();
+            let nama = document.getElementById("inputNama").value.trim();
+            let status = document.getElementById("inputStatus").value;
+
+            let now = new Date();
+            let waktu = `Hari ini, ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
+
+            let idx = pesertaList.findIndex(i => i.nama.toLowerCase() === nama.toLowerCase());
+            if (idx !== -1) {
+                pesertaList[idx].status = status;
+                pesertaList[idx].waktu = waktu;
+            } else {
+                pesertaList.push({ nama, status, waktu });
+            }
+
+            saveStorage();
+            closeModal();
+            renderTable(pesertaList);
+            showToast(`✅ Konfirmasi ${nama} berhasil dicatat!`);
+        }
+
+        function submitQna(e) {
+            e.preventDefault();
+            let nama = document.getElementById("qnaNama").value.trim();
+            let pesan = document.getElementById("qnaPesan").value.trim();
+            let id = Date.now();
+            let waktu = "Baru saja";
+
+            qnaList.push({ id, nama, pesan, waktu });
+            localStorage.setItem("legacy_event_qna_v4", JSON.stringify(qnaList));
+            document.getElementById("qnaForm").reset();
+            showToast(`💬 Pesan rahasia berhasil dikirim ke panitia!`);
+        }
+
+        function openAdminLoginModal() {
+            document.getElementById("adminLoginModal").style.display = "flex";
+        }
+        function closeAdminLoginModal() {
+            document.getElementById("adminLoginModal").style.display = "none";
+            document.getElementById("adminLoginForm").reset();
+        }
+
+        function verifyAdmin(e) {
+            e.preventDefault();
+            let pass = document.getElementById("adminPassword").value;
+            if (pass === "panitia26") {
+                closeAdminLoginModal();
+                openAdminDashboard();
+            } else {
+                alert("Sandi panitia salah!");
+            }
+        }
+
+        function openAdminDashboard() {
+            renderAdminInbox();
+            document.getElementById("adminDashboardModal").style.display = "flex";
+        }
+        function closeAdminDashboard() {
+            document.getElementById("adminDashboardModal").style.display = "none";
+        }
+
+        function renderAdminInbox() {
+            let container = document.getElementById("adminInboxContainer");
+            container.innerHTML = "";
+
+            if (qnaList.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 30px;">Belum ada pesan rahasia masuk.</p>`;
+                return;
+            }
+
+            qnaList.slice().reverse().forEach(item => {
+                let div = document.createElement("div");
+                div.className = "admin-inbox-item";
+                div.innerHTML = `
+                    <div>
+                        <h5>Dari: ${item.nama}</h5>
+                        <p>${item.pesan}</p>
+                        <small>Waktu: ${item.waktu}</small>
+                    </div>
+                    <button class="btn-delete" onclick="deleteQna(${item.id})">Hapus</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteQna(id) {
+            if (confirm("Hapus pesan ini?")) {
+                qnaList = qnaList.filter(i => i.id !== id);
+                localStorage.setItem("legacy_event_qna_v4", JSON.stringify(qnaList));
+                renderAdminInbox();
+                showToast("🗑️ Pesan berhasil dihapus.");
+            }
+        }
+
+        function toggleTheme() {
+            let html = document.documentElement;
+            let btn = document.getElementById("themeBtn");
+            if (html.classList.contains("dark")) {
+                html.classList.remove("dark");
+                html.classList.add("light");
+                btn.innerText = "🌙";
+            } else {
+                html.classList.remove("light");
+                html.classList.add("dark");
+                btn.innerText = "☀️";
+            }
+        }
+
+        renderTable(pesertaList);
+    </script>
+</body>
+</html>
